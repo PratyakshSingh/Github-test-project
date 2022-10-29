@@ -24,11 +24,40 @@ const memoise = (fun) => {
   };
 };
 
-const addEfficient = memoise(add);
+// const addEfficient = memoise(add);
+// console.time();
+// console.log(addEfficient(5));
+// console.timeEnd();
+
+// console.time();
+// console.log(addEfficient(5));
+// console.timeEnd();
+
+//===================================================
+//better memoised function
+
+const memoisedFn = function (fn) {
+  let cache = {};
+  return function (...args) {
+    let argsCache = JSON.stringify(args);
+    if (!cache[argsCache]) {
+      cache[argsCache] = fn.call(this, ...args);
+    }
+    return cache[argsCache];
+  };
+};
+
+const product = (num1, num2) => {
+  for (let i = 0; i < 10000000; i++) {}
+
+  return num1 * num2;
+};
+
+const memoisedProduct = memoisedFn(product);
 console.time();
-console.log(addEfficient(5));
+console.log(memoisedProduct(5899, 4556));
 console.timeEnd();
 
 console.time();
-console.log(addEfficient(5));
+console.log(memoisedProduct(5899, 4556));
 console.timeEnd();
