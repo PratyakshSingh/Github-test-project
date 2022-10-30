@@ -1,7 +1,7 @@
 //Def ==> A fun has access to the variable environment of the execution context where it was created.
 // ==> variable environment attached to the fn exactly as it was at the time and place the function was created.
 
-//mdn def ==>
+//MDN def ==>
 //A closure is the combination of a function bundled together
 //(enclosed) with references to its surrounding state (the lexical environment).
 //In other words, a closure gives you access to an outer function's
@@ -213,8 +213,15 @@ const subscribe = function () {
   };
 };
 
-let calledOnce = subscribe();
-calledOnce();
-calledOnce();
-calledOnce();
-calledOnce();
+// let calledOnce = subscribe();
+// calledOnce();
+// calledOnce();
+// calledOnce();
+// calledOnce();
+
+//==============================
+//difference between closure and scope
+//when we define a function and return a function inside that function then
+//the inner function is a closure whereas
+// scope in JS tells us what variable you have access to.
+//there are two types of scopes global and local

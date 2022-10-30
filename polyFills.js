@@ -69,3 +69,58 @@ const reduceNums = nums.myReduce((acc, curr, i, arr) => {
 //forEach ==> (1) doesnot return a new array. It modifies the original array.
 //              (2) cannot chain other array methods to it because it doesnot return anything.
 //===========================================================================================
+
+//==========================================================
+//POLYFILL FOR CALL
+
+let car = {
+  color: "Red",
+  company: "Ferrari",
+};
+
+function purchaseCar(currency, price) {
+  console.log(this.color, this.company, currency, price);
+}
+
+Function.prototype.myCall = function (context = {}, ...args) {
+  if (typeof this !== "function") {
+    throw new Error(this + "not callable");
+  }
+  context.fn = this;
+  context.fn(...args);
+};
+
+// purchaseCar.myCall(car, "Rupee", 5000000);
+
+//======================================================
+//POLYFILL FOR APPLY
+
+Function.prototype.myApply = function (context = {}, args = []) {
+  if (typeof this !== "function") {
+    throw new Error(this + "not callable");
+  }
+  if (!Array.isArray(args)) {
+    throw new Error("args is not a array.provide a array");
+  }
+  context.fn = this;
+  context.fn(...args);
+};
+
+// purchaseCar.myApply(car, ["Rupee", 5000000]);
+
+//=========================================================
+//POLYFILL FOR BIND
+
+Function.prototype.myBind = function (context = {}, ...args) {
+  if (typeof this !== "function") {
+    throw new Error(this + "not callable");
+  }
+  context.fn = this;
+  return function (...newArgs) {
+    return context.fn(...args, ...newArgs);
+  };
+};
+
+let carBind = purchaseCar.myBind(car);
+
+// carBind("Rupee", 5000000);
